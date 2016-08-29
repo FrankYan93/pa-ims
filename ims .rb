@@ -32,6 +32,19 @@ class Track_artist
   end
 end
 
+def help
+  puts "'Help' : display a simple help screen"
+  puts "'Exit' : save state and exit"
+  puts "'Info' : display a high level summary of the state"
+  puts "'Info ' + track_name or artist_name to see detail"
+  puts "'Add ' + track_name by(you must use ' by ' to seperate) artist_name(if not given,it would be default) to add new track to an artist"
+  puts "'Play ' + track_name to play the track(record + 1)"
+  puts "'Count tracks ' + a certain name of artist : Display how many tracks are known by a certain artist"
+  puts "'List tracks ' + a certain name of artist : Display the tracks played by a certain artist"
+  puts "'Delete' + a certain name of track to delete the track"
+  puts "'Update ' + track_name by(you must use ' by ' to seperate) artist_name to update the data"
+end
+
 class Command
   def self.respond(usr_command,command_len)
     store = YAML::Store.new('track_data.yml')
@@ -41,16 +54,7 @@ class Command
     bigFlag=true
     case usr_command
     when "Help","help" then
-      puts "'Help' : display a simple help screen"
-      puts "'Exit' : save state and exit"
-      puts "'Info' : display a high level summary of the state"
-      puts "'Info ' + track_name or artist_name to see detail"
-      puts "'Add ' + track_name by(you must use ' by ' to seperate) artist_name(if not given,it would be default) to add new track to an artist"
-      puts "'Play ' + track_name to play the track(record + 1)"
-      puts "'Count tracks ' + a certain name of artist : Display how many tracks are known by a certain artist"
-      puts "'List tracks ' + a certain name of artist : Display the tracks played by a certain artist"
-      puts "'Delete' + a certain name of track to delete the track"
-      puts "'Update ' + track_name by(you must use ' by ' to seperate) artist_name to update the data"
+      help    
     when "Info","info" then
       puts data
     else
