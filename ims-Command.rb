@@ -133,7 +133,6 @@ class Command
     data = store.transaction { store[:data] }
     data ||= {}
     data0=JSON.parse(data)
-    bigFlag=true
     case usr_command
     when "Help","help" then help
     when "Info","info" then puts data
@@ -160,6 +159,5 @@ class Command
       data=JSON data0
       store.transaction{ store[:data] = data; store.commit}
     end
-    print ">"
   end
 end

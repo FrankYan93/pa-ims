@@ -4,6 +4,7 @@ class IMS_Loop
     while (usr_command.capitalize) != "Exit"
       command_len=usr_command.length
       Command.respond(usr_command,command_len)
+      print ">"
       usr_command=gets.chomp
     end
   end
