@@ -1,4 +1,4 @@
-# IMS[![Code Climate](https://codeclimate.com/github/FrankYan93/pa-ims/badges/gpa.svg)](https://codeclimate.com/github/FrankYan93/pa-ims)
+# IMS [![Code Climate](https://codeclimate.com/github/FrankYan93/pa-ims/badges/gpa.svg)](https://codeclimate.com/github/FrankYan93/pa-ims)
 I've tried PStore and YAML:Store.
 PStore is quick but not readable while YAML:Store is readable but not so quick.
 
