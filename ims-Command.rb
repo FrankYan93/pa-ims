@@ -129,6 +129,7 @@ def list(data0,usr_command,command_len,complex_command)
 end
 class Command
   def self.respond(usr_command,command_len)
+    bigFlag=true
     store = YAML::Store.new('track_data.yml')
     data = store.transaction { store[:data] }
     data ||= {}
@@ -155,9 +156,7 @@ class Command
         puts "Error:command not found!"
       end
     end
-    if bigFlag
-      data=JSON data0
-      store.transaction{ store[:data] = data; store.commit}
-    end
+    data=JSON data0
+    store.transaction{ store[:data] = data; store.commit} if bigFlag
   end
 end
