@@ -1,4 +1,6 @@
-# IMS [![Code Climate](https://codeclimate.com/github/FrankYan93/pa-ims/badges/gpa.svg)](https://codeclimate.com/github/FrankYan93/pa-ims)
+# IMS<a href="https://codeclimate.com/github/FrankYan93/pa-ims"><img src="https://codeclimate.com/github/FrankYan93/pa-ims/badges/gpa.svg" /></a>
+There are two files ims and ims.rb.Their content is same.
+You can run ims either by "ruby ims" or "ruby ims.rb".
 I've tried PStore and YAML:Store.
 PStore is quick but not readable while YAML:Store is readable but not so quick.
 
