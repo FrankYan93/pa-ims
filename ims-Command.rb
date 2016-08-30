@@ -27,26 +27,25 @@ def info(data0,usr_command,command_len,data)
   puts "Data not found!"unless flag
 end
 def add(data0,usr_command,command_len,data)
-  flag =false
-    flag=usr_command[(4...command_len)].include?" by "
-    ar="default"
-    if flag
-      label=usr_command.rindex(" by ")-1
-      tr=usr_command[(4..label)]
-      ar=usr_command[(label+5...command_len)] if command_len>(label+5)
-    else
-      tr=usr_command[(4...command_len)]
-    end
+  flag=usr_command[(4...command_len)].include?" by "
+  ar="default"
+  if flag
+    label=usr_command.rindex(" by ")-1
+    tr=usr_command[(4..label)]
+    ar=usr_command[(label+5...command_len)] if command_len>(label+5)
+  else
+    tr=usr_command[(4...command_len)]
+  end
 
-    if !(data0.has_key?(tr))
-      trackInfo=Track_artist.new(tr,ar,0,data)
-      trackInfo.display_t
-      trackInfo.save_toStore
-      return false
-    else
-      puts "This track already exist!"
-      return true
-    end
+  if !(data0.has_key?(tr))
+    trackInfo=Track_artist.new(tr,ar,0,data)
+    trackInfo.display_t
+    trackInfo.save_toStore
+    return false
+  else
+    puts "This track already exist!"
+    return true
+  end
 end
 def play(data0,usr_command,command_len)
   data0.each{|x,y|
@@ -112,22 +111,22 @@ def update(data0,usr_command,command_len,data)
 end
 def list(data0,usr_command,command_len,complex_command)
   if complex_command[1]!="tracks"
-      puts "You typed a command that is not very precise,but it does not matter since we only care about the third word!"
-    end
-    flag=false
-    if complex_command[2]==nil
-      puts "Command error:you must type the artist_name begin at the third word"
-    else
-      label=usr_command.rindex(complex_command[2])
-      data0.each{|x,y|
-        if y[0]==usr_command[(label...command_len)]
-          puts x
-          flag=true
-        end
-      }
-      puts "Artist not found" unless flag
-    end
+    puts "You typed a command that is not very precise,but it does not matter since we only care about the third word!"
   end
+  flag=false
+  if complex_command[2]==nil
+    puts "Command error:you must type the artist_name begin at the third word"
+  else
+    label=usr_command.rindex(complex_command[2])
+    data0.each{|x,y|
+      if y[0]==usr_command[(label...command_len)]
+        puts x
+        flag=true
+      end
+    }
+    puts "Artist not found" unless flag
+  end
+end
 class Command
   def self.respond(usr_command,command_len)
     store = YAML::Store.new('track_data.yml')
@@ -136,29 +135,20 @@ class Command
     data0=JSON.parse(data)
     bigFlag=true
     case usr_command
-    when "Help","help" then
-      help
-    when "Info","info" then
-      puts data
+    when "Help","help" then help
+    when "Info","info" then puts data
     else
       complex_command=usr_command.split(' ')
       if complex_command.length>1
         complex_command[0].capitalize! unless complex_command[0].capitalize==nil
         case complex_command[0]
-        when "Info"
-          info(data0,usr_command,command_len,data)
-        when "Add"
-          bigFlag=add(data0,usr_command,command_len,data)
-        when "Play"
-          data0=play(data0,usr_command,command_len)
-        when "Delete"
-          data0=delete(data0,usr_command,command_len)
-        when "Count"
-          count(data0,usr_command,command_len,complex_command)
-        when "Update"
-          update(data0,usr_command,command_len,data)
-        when "List"
-          list(data0,usr_command,command_len,complex_command)
+        when "Info" then info(data0,usr_command,command_len,data)
+        when "Add" then bigFlag=add(data0,usr_command,command_len,data)
+        when "Play" then data0=play(data0,usr_command,command_len)
+        when "Delete" then data0=delete(data0,usr_command,command_len)
+        when "Count" then count(data0,usr_command,command_len,complex_command)
+        when "Update" then update(data0,usr_command,command_len,data)
+        when "List" then list(data0,usr_command,command_len,complex_command)
         else
           puts "Error:command not found!"
         end
@@ -168,10 +158,7 @@ class Command
     end
     if bigFlag
       data=JSON data0
-      store.transaction{
-        store[:data] = data
-        store.commit
-      }
+      store.transaction{ store[:data] = data; store.commit}
     end
     print ">"
   end
