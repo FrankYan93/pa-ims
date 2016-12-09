@@ -2,6 +2,8 @@
 # Author
 - **Jiadong Yan**
 
+# Brief Intro
+This is a little ruby shell program that records tracks and artists and the play frequency.
 # Getting Started
 After `chmod u+x ims`, you can run the program just type `./ims`  
 There are two files **ims and ims.rb** work as main entrance of the program.  
