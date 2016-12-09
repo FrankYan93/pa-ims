@@ -10,11 +10,11 @@ You can run ims either by `ruby ims` or `ruby ims.rb`.
 I've tried **PStore** and **YAML:Store**.
 PStore is quick but not readable while YAML:Store is readable but not so quick.
 
-# data
+# Data
 {    tracks => an array includes artist and played times,
   ...  }
 
-# my solution:  
+# My Solution:  
   class `IMS_Loop` :do the loop job  
   class `Commmand` :respond to user's commands  
   class `Track_artist` :display and add track,artist pair to YAML:Store  
