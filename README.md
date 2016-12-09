@@ -1,15 +1,20 @@
 # IMS<a href="https://codeclimate.com/github/FrankYan93/pa-ims"><img src="https://codeclimate.com/github/FrankYan93/pa-ims/badges/gpa.svg" /></a>
-There are two files ims and ims.rb.Their content is same.
+# Author
+- **Jiadong Yan**
+
+# Getting Started
+After `chmod u+x ims`, you can run the program just type `./ims`  
+There are two files **ims and ims.rb** work as main entrance of the program.  
+Their content is same.   
 You can run ims either by `ruby ims` or `ruby ims.rb`.
 I've tried **PStore** and **YAML:Store**.
 PStore is quick but not readable while YAML:Store is readable but not so quick.
 
-data{
-  tracks => an array includes artist and played times,
-  ...
-}
+# data
+{    tracks => an array includes artist and played times,
+  ...  }
 
-my solution:  
+# my solution:  
   class `IMS_Loop` :do the loop job  
   class `Commmand` :respond to user's commands  
   class `Track_artist` :display and add track,artist pair to YAML:Store  
@@ -21,8 +26,9 @@ my solution:
   use a class `Track_artist` to add new tracks and display,  
   command `Help` to see all commands.  
 
+# Unit Test
 **test_ims.rb** used for testing some commands's performance.
 
 
-Thank you for reading.
-Version 12/9/2016
+## Thank you for reading.
+## Version 12/9/2016

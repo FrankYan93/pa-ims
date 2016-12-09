@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 require 'yaml/store'
 require 'rubygems'
 require 'json'
