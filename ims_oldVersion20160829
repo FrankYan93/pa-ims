@@ -1,3 +1,37 @@
+class IMS_Loop
+  def self.runLoop
+    usr_command=gets.chomp
+    while (usr_command.capitalize) != "Exit"
+      command_len=usr_command.length
+      Command.respond(usr_command,command_len)
+      usr_command=gets.chomp
+    end
+  end
+end
+
+class Track_artist
+  def initialize(track,artist,played=0,data)
+    @t=String track
+    @a=artist
+    @p=played
+    @data=data
+  end
+  def display_t
+    puts "Track:#{@t}"
+    puts "Artist:#{@a}"
+    puts "It has been played:#{@p} times"
+  end
+  def save_toStore
+    data0=JSON.parse(@data)
+    data0[@t]=[@a,@p]
+    store = YAML::Store.new('track_data.yml')
+    store.transaction{
+      store[:data] = JSON data0
+      store.commit
+    }
+  end
+end
+
 def help
   puts "'Help' : display a simple help screen"
   puts "'Exit' : save state and exit"
@@ -27,25 +61,26 @@ def info(data0,usr_command,command_len,data)
   puts "Data not found!"unless flag
 end
 def add(data0,usr_command,command_len,data)
-  flag=usr_command[(4...command_len)].include?" by "
-  ar="default"
-  if flag
-    label=usr_command.rindex(" by ")-1
-    tr=usr_command[(4..label)]
-    ar=usr_command[(label+5...command_len)] if command_len>(label+5)
-  else
-    tr=usr_command[(4...command_len)]
-  end
+  flag =false
+    flag=usr_command[(4...command_len)].include?" by "
+    ar="default"
+    if flag
+      label=usr_command.rindex(" by ")-1
+      tr=usr_command[(4..label)]
+      ar=usr_command[(label+5...command_len)] if command_len>(label+5)
+    else
+      tr=usr_command[(4...command_len)]
+    end
 
-  if !(data0.has_key?(tr))
-    trackInfo=Track_artist.new(tr,ar,0,data)
-    trackInfo.display_t
-    trackInfo.save_toStore
-    return false
-  else
-    puts "This track already exist!"
-    return true
-  end
+    if !(data0.has_key?(tr))
+      trackInfo=Track_artist.new(tr,ar,0,data)
+      trackInfo.display_t
+      trackInfo.save_toStore
+      return false
+    else
+      puts "This track already exist!"
+      return true
+    end
 end
 def play(data0,usr_command,command_len)
   data0.each{|x,y|
@@ -127,31 +162,39 @@ def list(data0,usr_command,command_len,complex_command)
     puts "Artist not found" unless flag
   end
 end
+
+
 class Command
   def self.respond(usr_command,command_len)
-    bigFlag=true
     store = YAML::Store.new('track_data.yml')
     data = store.transaction { store[:data] }
     data ||= {}
     data0=JSON.parse(data)
+    bigFlag=true
     case usr_command
-    when "Help","help" then help
+    when "Help","help" then
+      help
     when "Info","info" then
-      data0.each{|key,value|
-        print "\nTrack name:#{key}\nArtist:#{value[0]}\nPlay time:#{value[1]}\n"
-      }
+      puts data
     else
       complex_command=usr_command.split(' ')
       if complex_command.length>1
         complex_command[0].capitalize! unless complex_command[0].capitalize==nil
         case complex_command[0]
-        when "Info" then info(data0,usr_command,command_len,data)
-        when "Add" then bigFlag=add(data0,usr_command,command_len,data)
-        when "Play" then data0=play(data0,usr_command,command_len)
-        when "Delete" then data0=delete(data0,usr_command,command_len)
-        when "Count" then count(data0,usr_command,command_len,complex_command)
-        when "Update" then update(data0,usr_command,command_len,data)
-        when "List" then list(data0,usr_command,command_len,complex_command)
+        when "Info"
+          info(data0,usr_command,command_len,data)
+        when "Add"
+          bigFlag=add(data0,usr_command,command_len,data)
+        when "Play"
+          data0=play(data0,usr_command,command_len)
+        when "Delete"
+          data0=delete(data0,usr_command,command_len)
+        when "Count"
+          count(data0,usr_command,command_len,complex_command)
+        when "Update"
+          update(data0,usr_command,command_len,data)
+        when "List"
+          list(data0,usr_command,command_len,complex_command)
         else
           puts "Error:command not found!"
         end
@@ -159,7 +202,23 @@ class Command
         puts "Error:command not found!"
       end
     end
-    data=JSON data0
-    store.transaction{ store[:data] = data; store.commit} if bigFlag
+    if bigFlag
+      data=JSON data0
+      store.transaction{
+        store[:data] = data
+        store.commit
+      }
+    end
+    print ">"
   end
 end
+
+require 'yaml/store'
+require 'rubygems'
+require 'json'
+
+puts "Tell me your command('Help' for cheking all commands):"
+print ">"
+
+IMS_Loop.runLoop
+puts "See you later!"
