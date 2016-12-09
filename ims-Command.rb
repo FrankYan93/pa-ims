@@ -131,7 +131,7 @@ def list(data0, usr_command, command_len, complex_command)
 end
 class Command
     def self.respond(usr_command, command_len)
-        bigFlag = true
+        bigFlag = true#to see if add is successful
         store = YAML::Store.new('track_data.yml')
         data0 = JSON.parse(store.transaction { store[:data] } || {}.to_json)
         case usr_command
