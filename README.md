@@ -1,4 +1,4 @@
-# IMS<a href="https://codeclimate.com/github/FrankYan93/pa-ims"><img src="https://codeclimate.com/github/FrankYan93/pa-ims/badges/gpa.svg" /></a>
+# IMS(Interactive Music Shell)<a href="https://codeclimate.com/github/FrankYan93/pa-ims"><img src="https://codeclimate.com/github/FrankYan93/pa-ims/badges/gpa.svg" /></a>
 # Author
 - **Jiadong Yan**
 
